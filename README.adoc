@@ -1,0 +1,25 @@
+== Location finder WS for LTE & GSM subscribers on Zain Jo Network
+
+The service will accept HTTP GET requests at:
+
+----
+http://localhost:8090/getLocation?msisdn=MSISDN
+----
+
+and respond with a link:/understanding/JSON[JSON] representation of a location:
+
+[source,json]
+----
+{"servingNode":"hqzainvUSN.mme.epc.mnc001.mcc416.3gppnetwork.org","lat":31.9636,"rat":"LTE","ecgi":{"mcc":"416","mnc":"01","cellID":"9511"},"cellName":"951-LampSite_IBS","districtc":"Rawabi","governorate":"Amman","subdistrict":"Wadi Essier","long":35.8447}
+----
+
+
+== What you'll need
+
+* java_version: 1.8
+* Make the source port fixed (TCP for the SLH):
+
+----
+# iptables -t nat -A POSTROUTING -p TCP --dport 3868 -j SNAT --to :3868
+----
+

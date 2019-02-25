@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+	<include resource="org/springframework/boot/logging/logback/base.xml" />
+	<!-- To include application.properties logging properties -->
+
+	<appender name="CDRS-TO-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		
+		<file>/var/log/location-finder/cdrs/location-finder-cdr.tmp</file>
+		<append>true</append>
+		
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<Pattern>
+				%d{dd-MM-yyyy HH:mm:ss.SSS}|%msg%n
+			</Pattern>
+		</encoder>
+		
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+      		<!-- rollover hourly -->
+      		<fileNamePattern>/var/log/location-finder/cdrs/location-finder-cdr-%d{yyyyMMddHH}-%i.cdr</fileNamePattern>
+       		<!-- each file should be at most 1MB, keep at most 1GB worth of history-->
+       		<maxFileSize>1MB</maxFileSize>    
+       		<totalSizeCap>1GB</totalSizeCap>
+    	</rollingPolicy>
+
+	</appender>
+
+	<logger name="CdrGenerator" additivity="false" level="INFO">
+		<appender-ref ref="CDRS-TO-FILE"/>
+	</logger>
+	
+</configuration>
